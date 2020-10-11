@@ -1,11 +1,21 @@
-# My Personal Project
+# Hotel Front Desk System
 
-## A subtitle
+## *For ease of customer service!*
 
-A *bulleted* list:
-- item 1
-- item 2
-- item 3
+This application will provide functionalities useful for hotel staff to navigate their everyday tasks. Things that can be done include:  
 
-An example of text with **bold** and *italic* fonts.  Note that the IntelliJ markdown previewer doesn't seem to render 
-the bold and italic fonts correctly but they will appear correctly on GitHub.
+
+- **Update room status to open, cleaning, and booked**
+- **Recording bookings and cancellations**
+- **Checking in guests**
+    - Taking customer information
+    - Assigning rooms & room cards
+
+- **Dealing with special requests**, such as
+    - Room service, pick-up to and from the airport, wake-up calls
+
+- Checking out guests, calculating their final bill, and update room list for cleaning staff to clean automatically
+
+This application will primarily be used by hotel receptionists.
+
+*I am interested in understanding how the hotel business works, and in how I can make the tasks of staff more efficient through computer programming.*
