@@ -46,7 +46,9 @@ class TaskTest {
 
     @Test
     public void testMarkComplete() {
-        testTask.markComplete();
+        assertTrue(testTask.markComplete());
         assertEquals(COMPLETE, testTask.getProgress());
+
+        assertFalse(testTask.markComplete());
     }
 }

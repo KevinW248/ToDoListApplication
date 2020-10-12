@@ -7,7 +7,8 @@ Things that can be done include:
 
 - **Adding and removing tasks**
 - **Viewing all current tasks**
-- **Marking tasks as complete or in-progress**
+- **Marking tasks as complete**
+- **Delete/remove a task**
 - **Filtering which tasks they see**
     - Filtering by incomplete
     - Filtering by categories, e.g. urgency
