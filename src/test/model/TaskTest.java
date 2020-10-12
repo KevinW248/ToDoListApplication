@@ -8,6 +8,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class TaskTest {
     private Task testTask;
 
+    private static final int COMPLETE = Task.COMPLETE;
+
     @BeforeEach
     public void setup() {
         testTask = new Task("Finish CPSC-210 Personal project",3);
@@ -42,5 +44,9 @@ class TaskTest {
         assertEquals(1,testTask.getUrgency());
     }
 
-
+    @Test
+    public void testMarkComplete() {
+        testTask.markComplete();
+        assertEquals(COMPLETE, testTask.getProgress());
+    }
 }
