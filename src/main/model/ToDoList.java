@@ -65,4 +65,12 @@ public class ToDoList {
         return total;
     }
 
+    //EFFECTS: returns list of tasks
+    public ArrayList<Task> getTaskList() {
+        return taskList;
+    }
+
+
+
+
 }

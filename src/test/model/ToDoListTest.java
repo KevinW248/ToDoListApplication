@@ -3,6 +3,8 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ToDoListTest {
@@ -65,6 +67,17 @@ public class ToDoListTest {
         }
         assertEquals(3,testToDo.getTotalCompleted());
         assertEquals(3,testToDo.getTotalIncomplete());
+    }
+
+
+    @Test
+    public void testGetLists() {
+        Task t = new Task(details[0],urgency[0]);
+        testToDo.addTask(t);
+
+        ArrayList<Task> taskList = testToDo.getTaskList();
+        assertEquals("Walk the dog",taskList.get(0).getDetails());
+
     }
 
 }
