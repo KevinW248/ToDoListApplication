@@ -19,6 +19,6 @@ This application can be used by anyone!
 A user should be able to: 
 - Add a task to their to-do list
 - View their current list of tasks on their to-do list
-- Mark a task as started, or complete on their to-do list
+    - See the number of incomplete and completed tasks as well
+- Mark a task as complete on their to-do list
 - Delete a task from their to-do-list
-- See the number of incomplete and completed tasks on their to-do list
