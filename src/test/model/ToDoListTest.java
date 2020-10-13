@@ -55,6 +55,20 @@ public class ToDoListTest {
     }
 
     @Test
+    public void testCompleteTask() {
+        Task t = new Task(details[0],urgency[0]);
+        Task t1 = new Task(details[1],urgency[1]);
+        testToDo.addTask(t);
+        testToDo.addTask(t1);
+
+        testToDo.completeTask(t.getId());
+        testToDo.completeTask(t1.getId());
+
+        assertEquals(Task.COMPLETE,t.getProgress());
+        assertEquals(Task.COMPLETE,t1.getProgress());
+    }
+
+    @Test
     public void testGetTotalCompleteAndIncomplete() {
         for (int i = 0; i < 6; i+=2) {
             Task t = new Task(details[i],urgency[i]);

@@ -69,6 +69,7 @@ public class Main {
         int id = scanner.nextInt();
         toDo.completeTask(id);
         System.out.println("Task is now marked as complete! Congratulations!");
+        scanner.nextLine();
     }
 
     //MODIFIES: this
@@ -78,6 +79,7 @@ public class Main {
         int id = scanner.nextInt();
         toDo.removeTask(id);
         System.out.println("Task is now removed!");
+        scanner.nextLine();
     }
 
     //EFFECTS: asks if tasks should be filtered before printing
@@ -96,6 +98,8 @@ public class Main {
             System.out.println(next.getDetails() + ", Urgency level: "
                     + next.getUrgency() + ", Progress: " + progress + ", Task ID: " + next.getId());
         }
+        System.out.println("# Tasks completed: " + toDo.getTotalCompleted());
+        System.out.println("# Tasks incomplete: " + toDo.getTotalIncomplete());
 
         System.out.println("Finished printing!");
     }
