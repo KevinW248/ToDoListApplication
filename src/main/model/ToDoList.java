@@ -25,6 +25,16 @@ public class ToDoList {
         return t;
     }
 
+    //REQUIRES: task id must be in idList
+    //MODIFIES: this
+    //EFFECTS: uses task id to locate mark a task in tasklist as complete
+    public Task completeTask(int id) {
+        int index = idList.indexOf(id);
+        Task t = taskList.get(index);
+        t.markComplete();
+        return t;
+    }
+
     //EFFECTS: returns size of taskList
     public int getTaskListSize() {
         return taskList.size();
@@ -69,8 +79,5 @@ public class ToDoList {
     public ArrayList<Task> getTaskList() {
         return taskList;
     }
-
-
-
 
 }

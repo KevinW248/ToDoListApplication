@@ -5,10 +5,10 @@
 This application will provide functionalities useful for anyone to navigate their everyday tasks.
 Things that can be done include:  
 
-- **Adding and removing tasks**
+- **Adding tasks**
 - **Viewing all current tasks**
 - **Marking tasks as complete**
-- **Delete/remove a task**
+- **Removing tasks**
 - **Filtering which tasks they see**
     - Filtering by incomplete
     - Filtering by categories, e.g. urgency
