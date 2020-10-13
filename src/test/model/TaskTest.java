@@ -16,11 +16,17 @@ class TaskTest {
     }
 
     @Test
-    public void testTaskConstructor() {
+    public void testTaskConstructorNormalUrgency() {
         assertEquals("Finish CPSC-210 Personal project",testTask.getDetails());
         assertEquals(3,testTask.getUrgency());
         assertEquals(0,testTask.getProgress());
         assertTrue(testTask.getId()>0);
+
+        Task testTask2 = new Task("a",2);
+        Task testTask3 = new Task("b",1);
+        assertEquals(2,testTask2.getUrgency());
+        assertEquals(1,testTask3.getUrgency());
+        assertTrue(testTask2.getId()>0);
     }
 
     @Test
@@ -34,22 +40,28 @@ class TaskTest {
 
     @Test
     public void testSetters() {
-        testTask.editDetails("Feed the dog");
+        testTask.setDetails("Feed the dog");
         assertEquals("Feed the dog",testTask.getDetails());
 
-        assertTrue(testTask.editUrgency(1));
+        assertTrue(testTask.setUrgency(1));
         assertEquals(1,testTask.getUrgency());
 
-        assertFalse(testTask.editUrgency(4));
-        assertEquals(1,testTask.getUrgency());
+        assertTrue(testTask.setUrgency(3));
+        assertEquals(3,testTask.getUrgency());
+
+        assertTrue(testTask.setUrgency(2));
+        assertEquals(2,testTask.getUrgency());
+
+        assertFalse(testTask.setUrgency(4));
+        assertEquals(2,testTask.getUrgency());
     }
 
     @Test
     public void testMarkComplete() {
-        assertTrue(testTask.markComplete());
+        assertTrue(testTask.setComplete());
         assertEquals(COMPLETE, testTask.getProgress());
 
-        assertFalse(testTask.markComplete());
+        assertFalse(testTask.setComplete());
     }
 
 }

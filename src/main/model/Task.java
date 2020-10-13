@@ -56,7 +56,7 @@ public class Task {
 
     //MODIFIES: this
     //EFFECTS: changes task details to string s
-    public void editDetails(String s) {
+    public void setDetails(String s) {
         details = s;
     }
 
@@ -64,8 +64,8 @@ public class Task {
     //EFFECTS: if 1<= u <= 3,
     //            - updates Urgency to u and returns true
     //         otherwise, urgency doesn't change and returns false
-    public Boolean editUrgency(int u) {
-        if (u >= 1 && u <= 3) {
+    public Boolean setUrgency(int u) {
+        if (u >= NOT_IMPORTANT && u <= VERY_IMPORTANT) {
             urgency = u;
             return true;
         }
@@ -76,7 +76,7 @@ public class Task {
     //EFFECTS: if progress is incomplete
     //              - update it to be complete and return true
     //         otherwise, return false
-    public Boolean markComplete() {
+    public Boolean setComplete() {
         if (progress == INCOMPLETE) {
             progress = COMPLETE;
             return true;

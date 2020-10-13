@@ -31,7 +31,7 @@ public class ToDoList {
     public Task completeTask(int id) {
         int index = idList.indexOf(id);
         Task t = taskList.get(index);
-        t.markComplete();
+        t.setComplete();
         return t;
     }
 

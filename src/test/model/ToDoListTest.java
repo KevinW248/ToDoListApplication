@@ -73,7 +73,7 @@ public class ToDoListTest {
         for (int i = 0; i < 6; i+=2) {
             Task t = new Task(details[i],urgency[i]);
             testToDo.addTask(t);
-            t.markComplete();
+            t.setComplete();
         }
         for (int i = 1; i < 6; i+=2) {
             Task t = new Task(details[i],urgency[i]);
