@@ -28,17 +28,13 @@ public class Main {
 
             if (option.equals("quit")) {
                 break;
-            }
-            if (option.equals("remove")) {
+            } else if (option.equals("remove")) {
                 removeTask();
-            }
-            if (option.equals("add")) {
+            } else if (option.equals("add")) {
                 addTask();
-            }
-            if (option.equals("complete")) {
+            } else if (option.equals("complete")) {
                 finishTask();
-            }
-            if (option.equals("view")) {
+            } else if (option.equals("view")) {
                 printTasks();
             }
 
@@ -57,7 +53,7 @@ public class Main {
         System.out.println("Description received! Type in its urgency, where 1 is least urgent (1,2,3)!");
         int urgency = scanner.nextInt();
 
-        Task t = new Task(description,urgency);
+        Task t = new Task(description, urgency);
         toDo.addTask(t);
         System.out.println("Added task! Task ID is: " + t.getId());
     }
@@ -87,6 +83,7 @@ public class Main {
         } else {
             printTasksTwo();
         }
+        System.out.println("Finished printing!");
     }
 
     public void printTasksTwo() {
@@ -95,15 +92,73 @@ public class Main {
 
         if (choice.equals("P")) {
             printTasksProgress();
-        }
-        if (choice.equals("U")) {
+        } else if (choice.equals("U")) {
             printTasksUrgency();
-        }
-        if (choice.equals("B")) {
+        } else if (choice.equals("B")) {
             printTasksBoth();
         }
+    }
 
+    public void printTasksProgress() {
+        System.out.println("Type 'I' for Incomplete, 'C' for Complete!");
+        String choice = scanner.nextLine();
+        int progress;
+
+        if (choice.equals("I")) {
+            progress = Task.INCOMPLETE;
+            System.out.println("Filtering by incomplete tasks!");
+        } else {
+            progress = Task.COMPLETE;
+            System.out.println("Filtering by complete tasks!");
+        }
+        printAll(progress);
+    }
+
+    public void printTasksUrgency() {
+        System.out.println("Type '1' for Not important, '2' for Moderately Important, and '3' for Very Important!");
+        int choice = scanner.nextInt();
+        int urgency = choice;
+        System.out.println("Filtering by Urgency level " + urgency + "!");
+
+        printAll(urgency);
+    }
+
+    public void printTasksBoth() {
+        System.out.println("First, Type 'I' for Incomplete, 'C' for Complete!");
+        String choice = scanner.nextLine();
+        int progress;
+        System.out.println("Next, type '1' for Not important, '2' for Moderately Important, "
+                + "and '3' for Very Important!");
+        int urgency = scanner.nextInt();
+
+        if (choice.equals("I")) {
+            progress = Task.INCOMPLETE;
+            System.out.println("Filtering by incomplete tasks!");
+        } else {
+            progress = Task.COMPLETE;
+            System.out.println("Filtering by complete tasks!");
+        }
+
+        printAll(progress,urgency);
     }
 
 
+
+    public void printAll(int i) {
+        for (Task next : toDo.getTaskList()) {
+            if (next.getProgress() == i) {
+                String details = next.getDetails();
+                System.out.println(details + " Task ID: " + next.getId());
+            }
+        }
+    }
+
+    public void printAll(int i1, int i2) {
+        for (Task next : toDo.getTaskList()) {
+            if (next.getProgress() == i1 && next.getUrgency() == i2) {
+                String details = next.getDetails();
+                System.out.println(details + " Task ID: " + next.getId());
+            }
+        }
+    }
 }
