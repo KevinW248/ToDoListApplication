@@ -9,9 +9,6 @@ Things that can be done include:
 - **Viewing all current tasks**
 - **Marking tasks as complete**
 - **Removing tasks**
-- **Filtering which tasks they see**
-    - Filtering by incomplete
-    - Filtering by categories, e.g. urgency
 
 This application can be used by anyone!
 
