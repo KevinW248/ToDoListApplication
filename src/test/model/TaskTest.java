@@ -27,6 +27,11 @@ class TaskTest {
         assertEquals(2,testTask2.getUrgency());
         assertEquals(1,testTask3.getUrgency());
         assertTrue(testTask2.getId()>0);
+        assertTrue(testTask3.getId()>0);
+
+        Task testTask4 = new Task("c",0);
+        assertEquals(3,testTask4.getUrgency());
+        assertTrue(testTask2.getId()>0);
     }
 
     @Test
@@ -53,6 +58,9 @@ class TaskTest {
         assertEquals(2,testTask.getUrgency());
 
         assertFalse(testTask.setUrgency(4));
+        assertEquals(2,testTask.getUrgency());
+
+        assertFalse(testTask.setUrgency(0));
         assertEquals(2,testTask.getUrgency());
     }
 
