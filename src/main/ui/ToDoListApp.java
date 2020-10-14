@@ -19,7 +19,11 @@ public class ToDoListApp {
 
 
     //MODIFIES: this
-    //EFFECTS: takes various inputs and calls the corresponding operations
+    //EFFECTS: only responds to 5 inputs:
+    //               - if user types quit, stops program
+    //               - if add, adds a task for the user
+    //               - if complete, user chooses a task to mark complete
+    //               - if view, prints all tasks for user to view
     public void handleCommands() {
         String option;
 
@@ -45,7 +49,7 @@ public class ToDoListApp {
     }
 
     //MODIFIES: this
-    //EFFECTS: adds a task to the ToDoList
+    //EFFECTS: adds a task to the ToDoList with a description and urgency provided by user
     public void addTask() {
         System.out.println("Type in your task's description!");
         String description = scanner.nextLine();
@@ -79,7 +83,7 @@ public class ToDoListApp {
         scanner.nextLine();
     }
 
-    //EFFECTS: prints all tasks, including their progress & urgency levels, and their ID
+    //EFFECTS: prints all tasks, including their progress & urgency levels, and their IDs
     public void printTasks() {
         System.out.println("Printing all tasks!");
 
