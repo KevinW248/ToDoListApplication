@@ -18,11 +18,12 @@ public class ToDoListApp {
         handleCommands();
     }
 
-
+    //REQUIRES: must enter inputs of either quit, add, remove complete, view
     //MODIFIES: this
     //EFFECTS: only responds to 5 inputs:
     //               - if user types quit, stops program
     //               - if add, adds a task for the user
+    //               - if remove, user chooses a task to remove
     //               - if complete, user chooses a task to mark complete
     //               - if view, prints all tasks for user to view
     public void handleCommands() {
@@ -64,6 +65,7 @@ public class ToDoListApp {
         scanner.nextLine();
     }
 
+    //REQUIRES: valid ID input
     //MODIFIES: this
     //EFFECTS: marks the task with the entered task ID as complete
     public void finishTask() {
@@ -74,6 +76,7 @@ public class ToDoListApp {
         scanner.nextLine();
     }
 
+    //REQUIRES: valid ID input
     //MODIFIES: this
     //EFFECTS: removes the task with the entered task ID from the ToDoList
     public void removeTask() {
