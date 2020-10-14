@@ -2,7 +2,7 @@ package model;
 
 import java.util.ArrayList;
 
-//EFFECTS: Makes new ToDoList, with an empty list of tasks and empty list of task IDs
+//EFFECTS: Represents a ToDoList, with a list of tasks and a list of task IDs (both empty at first)
 public class ToDoList {
     private ArrayList<Task> taskList = new ArrayList<>();
     private ArrayList<Integer> idList = new ArrayList<>();

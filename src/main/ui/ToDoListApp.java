@@ -5,6 +5,7 @@ import model.ToDoList;
 
 import java.util.Scanner;
 
+//To do List Application
 //Structure of this class is partially based on B04-SimpleCalculatorStartLecLab
 //           - handleCommands method, constructor
 public class ToDoListApp {

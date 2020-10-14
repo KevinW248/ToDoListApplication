@@ -5,7 +5,6 @@ public class Task {
 
     //represents urgency levels
     public static final int NOT_IMPORTANT = 1;
-    public static final int MODERATE_IMPORTANT = 2;
     public static final int VERY_IMPORTANT = 3;
 
     public static final int INCOMPLETE = 0;
