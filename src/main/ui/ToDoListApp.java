@@ -46,6 +46,13 @@ public class ToDoListApp {
             } else if (option.equals("view")) {
                 printTasks();
             }
+
+            //taken from StackOverflow/CPSC Piazza:
+            //https://stackoverflow.com/questions/16040601/why-is-nextline-returning-an-empty-string/16040699#16040699
+            while (!(option = scanner.nextLine()).isEmpty()) {
+                System.out.println(option + "<");
+            }
+
         }
         System.out.println("Have a nice day!");
     }
@@ -61,8 +68,6 @@ public class ToDoListApp {
         Task t = new Task(description, urgency);
         toDo.addTask(t);
         System.out.println("Added task! Task ID is: " + t.getId());
-        //necessary vvv to prevent handleCommands from printing twice
-        scanner.nextLine();
     }
 
     //REQUIRES: valid ID input
@@ -73,7 +78,6 @@ public class ToDoListApp {
         int id = scanner.nextInt();
         toDo.completeTask(id);
         System.out.println("Task is now marked as complete! Congratulations!");
-        scanner.nextLine();
     }
 
     //REQUIRES: valid ID input
@@ -84,7 +88,6 @@ public class ToDoListApp {
         int id = scanner.nextInt();
         toDo.removeTask(id);
         System.out.println("Task is now removed!");
-        scanner.nextLine();
     }
 
     //EFFECTS: prints all tasks, including their progress & urgency levels, and their IDs
@@ -104,6 +107,6 @@ public class ToDoListApp {
         System.out.println("# Tasks completed: " + toDo.getTotalCompleted());
         System.out.println("# Tasks incomplete: " + toDo.getTotalIncomplete());
 
-        System.out.println("Finished printing!");
+        System.out.println("Finished printing! Press enter to continue:");
     }
 }
