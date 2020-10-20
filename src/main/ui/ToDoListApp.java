@@ -15,46 +15,65 @@ public class ToDoListApp {
     public ToDoListApp() {
         toDo = new ToDoList();
         scanner = new Scanner(System.in);
-        handleCommands();
+        runToDo();
     }
 
-    //REQUIRES: must enter inputs of either quit, add, remove complete, view
-    //MODIFIES: this
-    //EFFECTS: only responds to 5 inputs:
-    //               - if user types quit, stops program
-    //               - if add, adds a task for the user
-    //               - if remove, user chooses a task to remove
-    //               - if complete, user chooses a task to mark complete
-    //               - if view, prints all tasks for user to view
-    public void handleCommands() {
-        String option;
 
-        while (true) {
+    //MODIFIES: this
+    //EFFECTS:  If user enters quit, stops program
+    //            Otherwise, calls handleCommands to process the command
+    public void runToDo() {
+        String option;
+        //keepGoing based on https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
+        boolean keepGoing = true;
+
+        while (keepGoing) {
             System.out.println("Select an option: 'add', 'remove', 'complete', 'view', 'quit'");
 
             option = scanner.nextLine();
 
 
             if (option.equals("quit")) {
-                break;
-            } else if (option.equals("add")) {
-                addTask();
-            } else if (option.equals("remove")) {
-                removeTask();
-            } else if (option.equals("complete")) {
-                finishTask();
-            } else if (option.equals("view")) {
-                printTasks();
+                keepGoing = false;
+            } else {
+                handleCommands(option);
             }
 
-            //taken from StackOverflow/CPSC Piazza:
-            //https://stackoverflow.com/questions/16040601/why-is-nextline-returning-an-empty-string/16040699#16040699
-            while (!(option = scanner.nextLine()).isEmpty()) {
-                System.out.println(option + "<");
-            }
+            resolveEmpty();
 
         }
         System.out.println("Have a nice day!");
+    }
+
+    //EFFECTS: allows runToDo() to skip over any leftover empty strings picked up by the scanner
+    private void resolveEmpty() {
+        //Based on StackOverflow/CPSC Piazza:
+        //https://stackoverflow.com/questions/16040601/why-is-nextline-returning-an-empty-string/16040699#16040699
+        String currLine;
+        while (!(currLine = scanner.nextLine()).isEmpty()) {
+            System.out.println(currLine + "<");
+        }
+    }
+
+    //design as a helper function based on https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
+    //MODIFIES: this
+    //EFFECTS:  if command is add, adds a task for the user
+    //          if remove, user chooses a task to remove
+    //          if complete, user chooses a task to mark complete
+    //          if view, prints all tasks for user to view
+    //              Otherwise, states that option is invalid
+    private void handleCommands(String option) {
+        if (option.equals("add")) {
+            addTask();
+        } else if (option.equals("remove")) {
+            removeTask();
+        } else if (option.equals("complete")) {
+            finishTask();
+        } else if (option.equals("view")) {
+            printTasks();
+        } else {
+            System.out.println("Selected option not valid");
+        }
     }
 
     //MODIFIES: this
@@ -109,4 +128,6 @@ public class ToDoListApp {
 
         System.out.println("Finished printing! Press enter to continue:");
     }
+
+
 }
