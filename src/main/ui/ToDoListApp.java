@@ -39,20 +39,8 @@ public class ToDoListApp {
                 handleCommands(option);
             }
 
-            resolveEmpty();
-
         }
         System.out.println("Have a nice day!");
-    }
-
-    //EFFECTS: allows runToDo() to skip over any leftover empty strings picked up by the scanner
-    private void resolveEmpty() {
-        //Based on StackOverflow/CPSC Piazza:
-        //https://stackoverflow.com/questions/16040601/why-is-nextline-returning-an-empty-string/16040699#16040699
-        String currLine;
-        while (!(currLine = scanner.nextLine()).isEmpty()) {
-            System.out.println(currLine + "<");
-        }
     }
 
     //design as a helper function based on https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
@@ -82,7 +70,7 @@ public class ToDoListApp {
         System.out.println("Type in your task's description!");
         String description = scanner.nextLine();
         System.out.println("Description received! Type in its urgency, where 1 is least urgent (1,2,3)!");
-        int urgency = scanner.nextInt();
+        int urgency = Integer.parseInt(scanner.nextLine());
 
         Task t = new Task(description, urgency);
         toDo.addTask(t);
@@ -94,7 +82,7 @@ public class ToDoListApp {
     //EFFECTS: marks the task with the entered task ID as complete
     public void finishTask() {
         System.out.println("Enter the ID of the task you have completed!");
-        int id = scanner.nextInt();
+        int id = Integer.parseInt(scanner.nextLine());
         toDo.completeTask(id);
         System.out.println("Task is now marked as complete! Congratulations!");
     }
@@ -104,7 +92,7 @@ public class ToDoListApp {
     //EFFECTS: removes the task with the entered task ID from the ToDoList
     public void removeTask() {
         System.out.println("Enter the ID of the task you would like to remove!");
-        int id = scanner.nextInt();
+        int id = Integer.parseInt(scanner.nextLine());
         toDo.removeTask(id);
         System.out.println("Task is now removed!");
     }

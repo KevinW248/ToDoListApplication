@@ -1,7 +1,10 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 //Represents a task having an id, details, urgency, and progress
-public class Task {
+public class Task implements Writable {
 
     //represents urgency levels
     public static final int NOT_IMPORTANT = 1;
@@ -81,6 +84,16 @@ public class Task {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("id", id);
+        json.put("details", details);
+        json.put("urgency", urgency);
+        json.put("progress", progress);
+        return json;
     }
 
 }

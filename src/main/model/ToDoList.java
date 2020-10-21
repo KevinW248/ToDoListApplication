@@ -1,9 +1,13 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 
 //EFFECTS: Represents a ToDoList, with a list of tasks and a list of task IDs (both empty at first)
-public class ToDoList {
+public class ToDoList implements Writable {
     private ArrayList<Task> taskList = new ArrayList<>();
     private ArrayList<Integer> idList = new ArrayList<>();
 
@@ -80,4 +84,21 @@ public class ToDoList {
         return taskList;
     }
 
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("taskList", thingiesToJson());
+        return json;
+    }
+
+    // EFFECTS: returns things in this workroom as a JSON array
+    private JSONArray thingiesToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Task t: taskList) {
+            jsonArray.put(t.toJson());
+        }
+
+        return jsonArray;
+    }
 }
