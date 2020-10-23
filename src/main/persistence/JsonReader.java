@@ -45,7 +45,7 @@ public class JsonReader {
     // EFFECTS: parses ToDoList from JSON object and returns it
     private ToDoList parseToDoList(JSONObject jsonObject) {
         String name = jsonObject.getString("name");
-        ToDoList td = new ToDoList();
+        ToDoList td = new ToDoList(name);
         addTasks(td, jsonObject);
         return td;
     }

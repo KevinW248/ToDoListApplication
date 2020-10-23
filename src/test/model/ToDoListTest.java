@@ -16,13 +16,14 @@ public class ToDoListTest {
 
     @BeforeEach
     public void setup() {
-        testToDo = new ToDoList();
+        testToDo = new ToDoList("Test");
     }
 
     @Test
     public void testToDoConstructor() {
         assertEquals(0,testToDo.getTaskListSize());
         assertEquals(0,testToDo.getIdListSize());
+        assertEquals("Test",testToDo.getName());
     }
 
     @Test

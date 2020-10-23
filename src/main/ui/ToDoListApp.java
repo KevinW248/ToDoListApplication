@@ -13,7 +13,7 @@ public class ToDoListApp {
     private ToDoList toDo;
 
     public ToDoListApp() {
-        toDo = new ToDoList();
+        toDo = new ToDoList("Your To-do List");
         scanner = new Scanner(System.in);
         runToDo();
     }
@@ -28,9 +28,10 @@ public class ToDoListApp {
         boolean keepGoing = true;
 
         while (keepGoing) {
-            System.out.println("Select an option: 'add', 'remove', 'complete', 'view', 'quit'");
+            displayOptions();
 
             option = scanner.nextLine();
+            option = option.toLowerCase();
 
 
             if (option.equals("quit")) {
@@ -41,6 +42,17 @@ public class ToDoListApp {
 
         }
         System.out.println("Have a nice day!");
+    }
+
+    //format based on https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
+    //EFFECTS: displays all options for the user
+    public void displayOptions() {
+        System.out.println("\nSelect an option!");
+        System.out.println("\tadd - adds a task");
+        System.out.println("\tremove - removes a task");
+        System.out.println("\tcomplete - completes a task");
+        System.out.println("\tview - views all tasks");
+        System.out.println("\tquit - quits the toDoList");
     }
 
     //design as a helper function based on https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
@@ -116,6 +128,8 @@ public class ToDoListApp {
 
         System.out.println("Finished printing! Press enter to continue:");
     }
+
+    //TODO: add save and load functionality
 
 
 }

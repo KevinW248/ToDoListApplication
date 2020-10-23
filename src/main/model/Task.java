@@ -86,6 +86,8 @@ public class Task implements Writable {
         return false;
     }
 
+    //TODO: address writable stuff
+
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

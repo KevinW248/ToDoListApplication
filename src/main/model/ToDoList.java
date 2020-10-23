@@ -8,8 +8,15 @@ import java.util.ArrayList;
 
 //EFFECTS: Represents a ToDoList, with a list of tasks and a list of task IDs (both empty at first)
 public class ToDoList implements Writable {
-    private ArrayList<Task> taskList = new ArrayList<>();
-    private ArrayList<Integer> idList = new ArrayList<>();
+    private String name;
+    private ArrayList<Task> taskList;
+    private ArrayList<Integer> idList;
+
+    public ToDoList(String name) {
+        this.name = name;
+        taskList = new ArrayList<>();
+        idList = new ArrayList<>();
+    }
 
     //MODIFIES: this
     //EFFECTS: adds task to list of tasks, and the task id to a list of ID
@@ -37,6 +44,11 @@ public class ToDoList implements Writable {
         Task t = taskList.get(index);
         t.setComplete();
         return t;
+    }
+
+    //EFFECTS: returns name of ToDoList
+    public String getName() {
+        return name;
     }
 
     //EFFECTS: returns size of taskList
@@ -83,6 +95,10 @@ public class ToDoList implements Writable {
     public ArrayList<Task> getTaskList() {
         return taskList;
     }
+
+
+
+    //TODO: address writable stuff
 
     @Override
     public JSONObject toJson() {
