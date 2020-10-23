@@ -20,14 +20,14 @@ public class Task implements Writable {
     private int urgency;                            //task urgency
     private int progress;                           //task progress
 
-    //REQUIRES: details is longer than 0 characters
+    //REQUIRES: details is longer than 0 characters, progress is incomplete or complete
     //EFFECTS: makes a new task, where:
     //         id is set to a unique positive integer for each new task,
     //         details are set to taskDetails,
     //         urgency is set to urgencyLevel if 1<=urgencyLevel<=3
     //              otherwise, urgencyLevel is 3
     //         progress is set to INCOMPLETE
-    public Task(String taskDetails, int urgencyLevel) {
+    public Task(String taskDetails, int urgencyLevel, int progress) {
         ////nextTaskId based on https://github.students.cs.ubc.ca/CPSC210/TellerApp
         id = nextTaskId++;
         this.details = taskDetails;
@@ -36,8 +36,10 @@ public class Task implements Writable {
         } else {
             this.urgency = VERY_IMPORTANT;
         }
-        progress = INCOMPLETE;
+        this.progress = progress;
     }
+
+
 
     public int getId() {
         return id;
@@ -92,7 +94,6 @@ public class Task implements Writable {
     //turns task into a JSONObject
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
-        json.put("id", id);
         json.put("details", details);
         json.put("urgency", urgency);
         json.put("progress", progress);

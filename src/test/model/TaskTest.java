@@ -12,7 +12,7 @@ class TaskTest {
 
     @BeforeEach
     public void setup() {
-        testTask = new Task("Finish CPSC-210 Personal project",3);
+        testTask = new Task("Finish CPSC-210 Personal project",3, Task.INCOMPLETE);
     }
 
     @Test
@@ -22,21 +22,22 @@ class TaskTest {
         assertEquals(0,testTask.getProgress());
         assertTrue(testTask.getId()>0);
 
-        Task testTask2 = new Task("a",2);
-        Task testTask3 = new Task("b",1);
+        Task testTask2 = new Task("a",2, Task.INCOMPLETE);
+        Task testTask3 = new Task("b",1, Task.INCOMPLETE);
         assertEquals(2,testTask2.getUrgency());
         assertEquals(1,testTask3.getUrgency());
         assertTrue(testTask2.getId()>0);
         assertTrue(testTask3.getId()>0);
 
-        Task testTask4 = new Task("c",0);
+        Task testTask4 = new Task("c",0, Task.COMPLETE);
         assertEquals(3,testTask4.getUrgency());
         assertTrue(testTask2.getId()>0);
+        assertEquals(Task.COMPLETE,testTask4.getProgress());
     }
 
     @Test
     public void testTaskConstructorDifferentUrgencyLevel(){
-        Task testTask2 = new Task("Test new task",4);
+        Task testTask2 = new Task("Test new task",4, Task.INCOMPLETE);
         assertEquals("Test new task",testTask2.getDetails());
         assertEquals(3,testTask2.getUrgency());
         assertEquals(0,testTask2.getProgress());

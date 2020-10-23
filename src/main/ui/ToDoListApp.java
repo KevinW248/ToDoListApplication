@@ -94,7 +94,7 @@ public class ToDoListApp {
         System.out.println("Description received! Type in its urgency, where 1 is least urgent (1,2,3)!");
         int urgency = Integer.parseInt(scanner.nextLine());
 
-        Task t = new Task(description, urgency);
+        Task t = new Task(description, urgency, Task.INCOMPLETE);
         toDo.addTask(t);
         System.out.println("Added task! Task ID is: " + t.getId());
     }

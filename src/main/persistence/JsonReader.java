@@ -67,7 +67,8 @@ public class JsonReader {
     private void addTask(ToDoList td, JSONObject jsonObject) {
         String details = jsonObject.getString("details");
         int urgency = jsonObject.getInt("urgency");
-        Task task = new Task(details, urgency);
+        int progress = jsonObject.getInt("progress");
+        Task task = new Task(details, urgency, progress);
         td.addTask(task);
     }
 }
