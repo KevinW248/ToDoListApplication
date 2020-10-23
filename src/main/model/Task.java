@@ -89,6 +89,7 @@ public class Task implements Writable {
     //TODO: address writable stuff
 
     @Override
+    //turns task into a JSONObject
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("id", id);

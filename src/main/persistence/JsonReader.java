@@ -41,7 +41,7 @@ public class JsonReader {
         return contentBuilder.toString();
     }
 
-    //TODO: ToDoList doesn't have a name
+
     // EFFECTS: parses ToDoList from JSON object and returns it
     private ToDoList parseToDoList(JSONObject jsonObject) {
         String name = jsonObject.getString("name");
@@ -50,7 +50,7 @@ public class JsonReader {
         return td;
     }
 
-    // MODIFIES: TDL
+    // MODIFIES: ToDoList
     // EFFECTS: parses tasks and IDs from JSON object and adds them to ToDoList
     private void addTasks(ToDoList td, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("taskList");
@@ -62,7 +62,7 @@ public class JsonReader {
     }
 
 
-    // MODIFIES: TDL
+    // MODIFIES: ToDoList
     // EFFECTS: parses thingy from JSON object and adds it to ToDoList
     private void addTask(ToDoList td, JSONObject jsonObject) {
         String details = jsonObject.getString("details");

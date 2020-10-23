@@ -2,19 +2,29 @@ package ui;
 
 import model.Task;
 import model.ToDoList;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 
 //To do List Application
-//Structure of this class is partially based on B04-SimpleCalculatorStartLecLab
-//           - handleCommands method, constructor
+//Structure of this class is partially based on https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
+//JSON functionality incorporated from https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
 public class ToDoListApp {
     private Scanner scanner;
     private ToDoList toDo;
+    private static final String JSON_STORE = "./data/workroom.json";
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
+
 
     public ToDoListApp() {
-        toDo = new ToDoList("Your To-do List");
+        toDo = new ToDoList("My ToDoList");
         scanner = new Scanner(System.in);
+        //jsonWriter = new JsonWriter(JSON_STORE);
+        //jsonReader = new JsonReader(JSON_STORE);
         runToDo();
     }
 
@@ -56,7 +66,7 @@ public class ToDoListApp {
     }
 
     //design as a helper function based on https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
-    //MODIFIES: this
+    //MODIFIES: this, Task, ToDoList
     //EFFECTS:  if command is add, adds a task for the user
     //          if remove, user chooses a task to remove
     //          if complete, user chooses a task to mark complete
@@ -76,7 +86,7 @@ public class ToDoListApp {
         }
     }
 
-    //MODIFIES: this
+    //MODIFIES: this, ToDoList
     //EFFECTS: adds a task to the ToDoList with a description and urgency provided by user
     public void addTask() {
         System.out.println("Type in your task's description!");
@@ -90,7 +100,7 @@ public class ToDoListApp {
     }
 
     //REQUIRES: valid ID input
-    //MODIFIES: this
+    //MODIFIES: this, ToDoList, Task
     //EFFECTS: marks the task with the entered task ID as complete
     public void finishTask() {
         System.out.println("Enter the ID of the task you have completed!");
@@ -100,7 +110,7 @@ public class ToDoListApp {
     }
 
     //REQUIRES: valid ID input
-    //MODIFIES: this
+    //MODIFIES: this, ToDoList
     //EFFECTS: removes the task with the entered task ID from the ToDoList
     public void removeTask() {
         System.out.println("Enter the ID of the task you would like to remove!");
@@ -131,5 +141,27 @@ public class ToDoListApp {
 
     //TODO: add save and load functionality
 
+//    // EFFECTS: saves the workroom to file
+//    private void saveWorkRoom() {
+//        try {
+//            jsonWriter.open();
+//            jsonWriter.write(workRoom);
+//            jsonWriter.close();
+//            System.out.println("Saved " + workRoom.getName() + " to " + JSON_STORE);
+//        } catch (FileNotFoundException e) {
+//            System.out.println("Unable to write to file: " + JSON_STORE);
+//        }
+//    }
+
+    // MODIFIES: this
+    // EFFECTS: loads workroom from file
+    private void loadWorkRoom() {
+        try {
+            toDo = jsonReader.read();
+            System.out.println("Loaded " + toDo.getName() + " from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
+        }
+    }
 
 }

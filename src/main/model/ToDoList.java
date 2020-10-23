@@ -6,12 +6,14 @@ import persistence.Writable;
 
 import java.util.ArrayList;
 
-//EFFECTS: Represents a ToDoList, with a list of tasks and a list of task IDs (both empty at first)
+//Represents a ToDoList, with a name, and list of tasks task IDs (both empty at first)
+//JSON functionality incorporated from https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
 public class ToDoList implements Writable {
     private String name;
     private ArrayList<Task> taskList;
     private ArrayList<Integer> idList;
 
+    //EFFECTS: creates new ToDoList with specified name, and empty task and ID lists
     public ToDoList(String name) {
         this.name = name;
         taskList = new ArrayList<>();
@@ -37,7 +39,7 @@ public class ToDoList implements Writable {
     }
 
     //REQUIRES: task id must be in idList
-    //MODIFIES: this
+    //MODIFIES: this, Task
     //EFFECTS: uses task id to locate mark a task in tasklist as complete
     public Task completeTask(int id) {
         int index = idList.indexOf(id);
@@ -103,12 +105,12 @@ public class ToDoList implements Writable {
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
-        json.put("taskList", thingiesToJson());
+        json.put("taskList", tasksToJson());
         return json;
     }
 
-    // EFFECTS: returns things in this workroom as a JSON array
-    private JSONArray thingiesToJson() {
+    // EFFECTS: returns tasks in this ToDoList as a JSON array
+    private JSONArray tasksToJson() {
         JSONArray jsonArray = new JSONArray();
 
         for (Task t: taskList) {
