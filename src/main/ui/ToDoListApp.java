@@ -15,7 +15,7 @@ import java.util.Scanner;
 public class ToDoListApp {
     private Scanner scanner;
     private ToDoList toDo;
-    private static final String JSON_STORE = "./data/workroom.json";
+    private static final String JSON_STORE = "./data/ToDoList.json";
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
 
@@ -23,8 +23,8 @@ public class ToDoListApp {
     public ToDoListApp() {
         toDo = new ToDoList("My ToDoList");
         scanner = new Scanner(System.in);
-        //jsonWriter = new JsonWriter(JSON_STORE);
-        //jsonReader = new JsonReader(JSON_STORE);
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
         runToDo();
     }
 
@@ -58,6 +58,8 @@ public class ToDoListApp {
     //EFFECTS: displays all options for the user
     public void displayOptions() {
         System.out.println("\nSelect an option!");
+        System.out.println("\tload - loads your ToDoList");
+        System.out.println("\tsave - saves you ToDoList");
         System.out.println("\tadd - adds a task");
         System.out.println("\tremove - removes a task");
         System.out.println("\tcomplete - completes a task");
@@ -67,13 +69,19 @@ public class ToDoListApp {
 
     //design as a helper function based on https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
     //MODIFIES: this, Task, ToDoList
-    //EFFECTS:  if command is add, adds a task for the user
+    //EFFECTS:  if command is load, loads saved ToDoList
+    //          if save, saves current ToDoList
+    //          if add, adds a task for the user
     //          if remove, user chooses a task to remove
     //          if complete, user chooses a task to mark complete
     //          if view, prints all tasks for user to view
     //              Otherwise, states that option is invalid
     private void handleCommands(String option) {
-        if (option.equals("add")) {
+        if (option.equals("load")) {
+            loadToDoList();
+        } else if (option.equals("save")) {
+            saveToDoList();
+        } else if (option.equals("add")) {
             addTask();
         } else if (option.equals("remove")) {
             removeTask();
@@ -139,23 +147,21 @@ public class ToDoListApp {
         System.out.println("Finished printing! Press enter to continue:");
     }
 
-    //TODO: add save and load functionality
-
-//    // EFFECTS: saves the workroom to file
-//    private void saveWorkRoom() {
-//        try {
-//            jsonWriter.open();
-//            jsonWriter.write(workRoom);
-//            jsonWriter.close();
-//            System.out.println("Saved " + workRoom.getName() + " to " + JSON_STORE);
-//        } catch (FileNotFoundException e) {
-//            System.out.println("Unable to write to file: " + JSON_STORE);
-//        }
-//    }
+    // EFFECTS: saves the workroom to file
+    private void saveToDoList() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(toDo);
+            jsonWriter.close();
+            System.out.println("Saved " + toDo.getName() + " to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
 
     // MODIFIES: this
     // EFFECTS: loads workroom from file
-    private void loadWorkRoom() {
+    private void loadToDoList() {
         try {
             toDo = jsonReader.read();
             System.out.println("Loaded " + toDo.getName() + " from " + JSON_STORE);

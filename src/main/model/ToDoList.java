@@ -81,7 +81,7 @@ public class ToDoList implements Writable {
         return total;
     }
 
-    //returns number of incomplete items in taskList
+    //EFFECTS: returns number of incomplete items in taskList
     public int getTotalIncomplete() {
         int total = 0;
         for (Task next : taskList) {
@@ -99,24 +99,21 @@ public class ToDoList implements Writable {
     }
 
 
-
-    //TODO: address writable stuff
-
     @Override
+    //EFFECTS: converts ToDoList into a JSONObject
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
+        json.put("name", name);
         json.put("taskList", tasksToJson());
         return json;
     }
 
-    // EFFECTS: returns tasks in this ToDoList as a JSON array
+    //EFFECTS: returns tasks in this ToDoList as a JSON array
     private JSONArray tasksToJson() {
         JSONArray jsonArray = new JSONArray();
-
         for (Task t: taskList) {
             jsonArray.put(t.toJson());
         }
-
         return jsonArray;
     }
 }

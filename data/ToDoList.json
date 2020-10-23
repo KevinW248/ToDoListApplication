@@ -1,0 +1,20 @@
+{
+    "name": "My ToDoList",
+    "taskList": [
+        {
+            "urgency": 1,
+            "progress": 1,
+            "details": "Eat cookies"
+        },
+        {
+            "urgency": 2,
+            "progress": 0,
+            "details": "Eat dinner"
+        },
+        {
+            "urgency": 3,
+            "progress": 0,
+            "details": "study for 3 midterms"
+        }
+    ]
+}

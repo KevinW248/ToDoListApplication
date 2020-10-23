@@ -26,9 +26,8 @@ public class JsonWriter {
     }
 
     // MODIFIES: this
-    // EFFECTS: writes JSON representation of workroom to file
+    // EFFECTS: writes JSON representation of ToDoList to file
     public void write(ToDoList toDo) {
-        //TODO: check toDo.toJson
         JSONObject json = toDo.toJson();
         saveToFile(json.toString(TAB));
     }
