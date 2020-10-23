@@ -2,13 +2,13 @@
     "taskList": [
         {
             "details": "Eat cupcakes",
-            "urgency": "1",
-            "progress": "1"
+            "urgency": 1,
+            "progress": 1
         },
         {
             "details": "Study for 3 midterms",
-            "urgency": "3",
-            "progress": "0"
+            "urgency": 3,
+            "progress": 0
         }
     ],
     "name": "Test ToDo"
