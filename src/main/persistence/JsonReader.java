@@ -13,7 +13,7 @@ import java.nio.file.Paths;
 import java.util.stream.Stream;
 
 //entirely modeled from https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
-// Represents a reader that reads workroom from JSON data stored in file
+// Represents a reader that reads ToDoList from JSON data stored in file
 public class JsonReader {
     private String source;
 
@@ -22,7 +22,7 @@ public class JsonReader {
         this.source = source;
     }
 
-    // EFFECTS: reads workroom from file and returns it;
+    // EFFECTS: reads ToDoList from file and returns it;
     // throws IOException if an error occurs reading data from file
     public ToDoList read() throws IOException {
         String jsonData = readFile(source);
@@ -63,7 +63,7 @@ public class JsonReader {
 
 
     // MODIFIES: ToDoList
-    // EFFECTS: parses thingy from JSON object and adds it to ToDoList
+    // EFFECTS: parses Task from JSON object and adds it to ToDoList
     private void addTask(ToDoList td, JSONObject jsonObject) {
         String details = jsonObject.getString("details");
         int urgency = jsonObject.getInt("urgency");

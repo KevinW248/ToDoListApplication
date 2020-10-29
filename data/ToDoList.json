@@ -15,6 +15,11 @@
             "urgency": 3,
             "progress": 0,
             "details": "study for 3 midterms"
+        },
+        {
+            "urgency": 2,
+            "progress": 0,
+            "details": "Do Lab 7"
         }
     ]
 }
