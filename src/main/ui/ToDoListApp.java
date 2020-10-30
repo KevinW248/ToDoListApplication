@@ -59,7 +59,7 @@ public class ToDoListApp {
     public void displayOptions() {
         System.out.println("\nSelect an option!");
         System.out.println("\tload - loads your ToDoList");
-        System.out.println("\tsave - saves you ToDoList");
+        System.out.println("\tsave - saves your ToDoList");
         System.out.println("\tadd - adds a task");
         System.out.println("\tremove - removes a task");
         System.out.println("\tcomplete - completes a task");
