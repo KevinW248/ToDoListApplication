@@ -147,7 +147,7 @@ public class ToDoListApp {
         System.out.println("Finished printing! Press enter to continue:");
     }
 
-    // EFFECTS: saves the workroom to file
+    // EFFECTS: saves the todolist to file
     private void saveToDoList() {
         try {
             jsonWriter.open();
@@ -160,7 +160,7 @@ public class ToDoListApp {
     }
 
     // MODIFIES: this
-    // EFFECTS: loads workroom from file
+    // EFFECTS: loads todolist from file
     private void loadToDoList() {
         try {
             toDo = jsonReader.read();

@@ -1,11 +1,18 @@
 package ui;
 
+import model.Task;
+import model.ToDoList;
+import persistence.JsonReader;
+import persistence.JsonWriter;
+
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class ToDoListAppGUI2 extends JFrame implements ActionListener, ListSelectionListener {
 
@@ -18,8 +25,13 @@ public class ToDoListAppGUI2 extends JFrame implements ActionListener, ListSelec
     JButton saveButton;
 
     //testing
+    private ToDoList toDo = new ToDoList("My ToDoList");
     private JList list;
-    private DefaultListModel listModel;
+    private DefaultListModel<String> listModel = new DefaultListModel();
+
+    private static final String JSON_STORE = "./data/ToDoList.json";
+    private JsonReader jsonReader = new JsonReader(JSON_STORE);
+    private JsonWriter jsonWriter = new JsonWriter(JSON_STORE);
 
     public ToDoListAppGUI2() {
         super("My To-Do List");
@@ -28,22 +40,9 @@ public class ToDoListAppGUI2 extends JFrame implements ActionListener, ListSelec
 
         setLayout(new BorderLayout());
 
-        listModel = new DefaultListModel();
-        listModel.addElement("Jane Doe");
-        listModel.addElement("John Smith");
-        listModel.addElement("Kathy Green");
-
-        //Create the list and put it in a scroll pane.
-        list = new JList(listModel);
-        list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        list.setSelectedIndex(0);
-        list.addListSelectionListener(this);
-        list.setVisibleRowCount(10);
-        JScrollPane listScrollPane = new JScrollPane(list);
-
-
+        //Create the list and put it in a scroll pane, based on ListDemoProject
+        JScrollPane listScrollPane = createList();
         initializeFields();
-
         JPanel buttonPane = getButtonPane();
 
 
@@ -54,6 +53,17 @@ public class ToDoListAppGUI2 extends JFrame implements ActionListener, ListSelec
 
         add(listScrollPane, BorderLayout.CENTER);
         add(buttonPane, BorderLayout.PAGE_END);
+    }
+
+//    @org.jetbrains.annotations.NotNull
+    private JScrollPane createList() {
+        list = new JList(listModel);
+        list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        list.setSelectedIndex(0);
+        list.addListSelectionListener(this);
+        list.setVisibleRowCount(10);
+        JScrollPane listScrollPane = new JScrollPane(list);
+        return listScrollPane;
     }
 
     private void initializeFields() {
@@ -114,31 +124,137 @@ public class ToDoListAppGUI2 extends JFrame implements ActionListener, ListSelec
 
 
     @Override
+    //EFFECTS: if
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("addTask")) {
-            field1.getText();
+            addTask();
         } else if (e.getActionCommand().equals("removeTask")) {
-            field1.getText();
-        } else if (e.getActionCommand().equals("saveTodo")) {
-            field1.getText();
-        } else if (e.getActionCommand().equals("loadTodo")) {
-            field1.getText();
+            removeTask();
+        } else if (e.getActionCommand().equals("saveToDo")) {
+            saveToDoList();
+        } else if (e.getActionCommand().equals("loadToDo")) {
+            loadToDoList();
+            uploadToDoList();
         }
 
     }
 
+    public void addTask() {
+        String details = field1.getText();
+        int urgency = Integer.parseInt(field2.getText());
+
+        Task newTask = new Task(details, urgency, 0);
+        toDo.addTask(newTask);
+
+        int index = list.getSelectedIndex(); //get selected index
+        if (index == -1) { //no selection, so insert at beginning
+            index = 0;
+        } else {           //add after the selected item
+            index++;
+        }
+
+        String text = getTaskInfo(newTask);
+        listModel.insertElementAt(text, index);
+        //If we just wanted to add to the end, we'd do this:
+//        listModel.addElement(employeeName.getText());
+
+        //Reset the text fields.
+        field1.requestFocusInWindow();
+        field1.setText("");
+        field2.requestFocusInWindow();
+        field2.setText("");
+
+        //Select the new item and make it visible.
+        list.setSelectedIndex(index);
+        list.ensureIndexIsVisible(index);
+    }
+
+
+    //EFFECTS: produces the string for the task information to be displayed
+    private String getTaskInfo(Task newTask) {
+        String progress;
+        if (newTask.getProgress() == Task.INCOMPLETE) {
+            progress = "incomplete";
+        } else {
+            progress = "complete";
+        }
+        String text = "Details: " + newTask.getDetails() + "    Urgency: " + newTask.getUrgency()
+                + "    Progress: " + progress;
+
+        return text;
+    }
+
     @Override
+    //based on ListDemoProject
+    //MODIFIES: this
+    //EFFECTS: If there is no task selected, disable remove button
+    //         If there is, enable it
     public void valueChanged(ListSelectionEvent e) {
         if (e.getValueIsAdjusting() == false) {
 
             if (list.getSelectedIndex() == -1) {
-                //No selection, disable fire button.
                 removeTaskButton.setEnabled(false);
 
             } else {
-                //Selection, enable the fire button.
                 removeTaskButton.setEnabled(true);
             }
+        }
+    }
+
+    public void removeTask() {
+        //This method can be called only if
+        //there's a valid selection
+        //so go ahead and remove whatever's selected.
+        int index = list.getSelectedIndex();
+        listModel.remove(index);
+
+        int size = listModel.getSize();
+
+        if (size == 0) { //Nobody's left, disable firing.
+            removeTaskButton.setEnabled(false);
+
+        } else { //Select an index.
+            if (index == listModel.getSize()) {
+                //removed item in last position
+                index--;
+            }
+
+            list.setSelectedIndex(index);
+            list.ensureIndexIsVisible(index);
+        }
+    }
+
+    //MODIFIES: this
+    //EFFECTS: loads todolist from file
+    private void loadToDoList() {
+        try {
+            toDo = jsonReader.read();
+            System.out.println("Loaded " + toDo.getName() + " from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
+        }
+    }
+
+    //MODIFIES: this
+    //EFFECTS: clears list model and replaces it with everything in todolist
+    private void uploadToDoList() {
+        listModel.clear();
+        //TODO: make this unmodifiable getTaskList
+        for (Task t: toDo.getTaskList()) {
+            String info = getTaskInfo(t);
+            listModel.addElement(info);
+        }
+    }
+
+    // EFFECTS: saves the todolist to file
+    private void saveToDoList() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(toDo);
+            jsonWriter.close();
+            System.out.println("Saved " + toDo.getName() + " to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
         }
     }
 }

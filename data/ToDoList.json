@@ -2,24 +2,19 @@
     "name": "My ToDoList",
     "taskList": [
         {
-            "urgency": 1,
-            "progress": 1,
-            "details": "Eat cookies"
-        },
-        {
             "urgency": 2,
             "progress": 0,
-            "details": "Eat dinner"
+            "details": "Penguin"
+        },
+        {
+            "urgency": 1,
+            "progress": 0,
+            "details": "Eat cheese"
         },
         {
             "urgency": 3,
             "progress": 0,
-            "details": "study for 3 midterms"
-        },
-        {
-            "urgency": 2,
-            "progress": 0,
-            "details": "Do Lab 7"
+            "details": "Do homework"
         }
     ]
 }
