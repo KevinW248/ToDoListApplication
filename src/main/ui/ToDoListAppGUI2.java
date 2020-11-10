@@ -15,7 +15,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 ////To do List Application GUI
-//Scrollpane functionality & JList related functionality based on ListDemo
+//Scroll pane functionality, JList functionality, some display based on ListDemo
 //https://docs.oracle.com/javase/tutorial/uiswing/examples/components/index.html
 //button functionality based on
 // https://stackoverflow.com/questions/6578205/swing-jlabel-text-change-on-the-running-application
@@ -38,8 +38,8 @@ public class ToDoListAppGUI2 extends JFrame implements ActionListener, ListSelec
 
     //Json functionality
     private static final String JSON_STORE = "./data/ToDoList.json";
-    private JsonReader jsonReader = new JsonReader(JSON_STORE);
-    private JsonWriter jsonWriter = new JsonWriter(JSON_STORE);
+    private final JsonReader jsonReader = new JsonReader(JSON_STORE);
+    private final JsonWriter jsonWriter = new JsonWriter(JSON_STORE);
 
     //EFFECTS: initializes GUI, including scrolling/list area, setting button functionality,
     //         setting up the display
@@ -72,8 +72,7 @@ public class ToDoListAppGUI2 extends JFrame implements ActionListener, ListSelec
         list.setSelectedIndex(0);
         list.addListSelectionListener(this);
         list.setVisibleRowCount(10);
-        JScrollPane listScrollPane = new JScrollPane(list);
-        return listScrollPane;
+        return new JScrollPane(list);
     }
 
     //MODIFIES: this
@@ -131,10 +130,11 @@ public class ToDoListAppGUI2 extends JFrame implements ActionListener, ListSelec
 
     //EFFECTS: creates a new button for the TodoList GUI, with a specified button name and command
     private JButton createTodoButton(String buttonName, String commandName) {
-        JButton addTaskButton = new JButton(buttonName);
-        addTaskButton.setActionCommand(commandName);
-        addTaskButton.addActionListener(this);
-        return addTaskButton;
+        JButton newTaskButton = new JButton(buttonName);
+        newTaskButton.setActionCommand(commandName);
+        newTaskButton.addActionListener(this);
+        newTaskButton.setBackground(new Color(186, 216, 247));
+        return newTaskButton;
     }
 
 
@@ -176,10 +176,8 @@ public class ToDoListAppGUI2 extends JFrame implements ActionListener, ListSelec
 
         String text = getTaskInfo(newTask);
         listModel.insertElementAt(text, index);
-        //If we just wanted to add to the end, we'd do this:
-//        listModel.addElement(text);
 
-        //Reset the text fields.
+        //Reset text fields.
         field1.requestFocusInWindow();
         field1.setText("");
         field2.requestFocusInWindow();
@@ -199,8 +197,10 @@ public class ToDoListAppGUI2 extends JFrame implements ActionListener, ListSelec
         } else {
             progress = "complete";
         }
-        String taskText = "Details: " + newTask.getDetails() + "    Urgency: "
-                + newTask.getUrgency() + "    Progress: " + progress + "    ID: " + newTask.getId();
+        String taskText = "Details: " + newTask.getDetails()
+                        + "    Urgency: " + newTask.getUrgency()
+                        + "    Progress: " + progress
+                        + "    ID: " + newTask.getId();
 
         return taskText;
     }
@@ -215,7 +215,6 @@ public class ToDoListAppGUI2 extends JFrame implements ActionListener, ListSelec
 
             if (list.getSelectedIndex() == -1) {
                 removeTaskButton.setEnabled(false);
-
             } else {
                 removeTaskButton.setEnabled(true);
             }
@@ -268,7 +267,6 @@ public class ToDoListAppGUI2 extends JFrame implements ActionListener, ListSelec
     //EFFECTS: clears list model and replaces it with everything in todolist
     private void uploadToDoList() {
         listModel.clear();
-        //TODO: make this unmodifiable getTaskList
         for (Task t : toDo.getTaskList()) {
             String info = getTaskInfo(t);
             listModel.addElement(info);
