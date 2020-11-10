@@ -14,25 +14,35 @@ import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+////To do List Application GUI
+//Scrollpane functionality & JList related functionality based on ListDemo
+//https://docs.oracle.com/javase/tutorial/uiswing/examples/components/index.html
+//button functionality based on
+// https://stackoverflow.com/questions/6578205/swing-jlabel-text-change-on-the-running-application
 public class ToDoListAppGUI2 extends JFrame implements ActionListener, ListSelectionListener {
 
+    //text fields
     private JTextField field1;
     private JTextField field2;
 
+    //buttons
     JButton addTaskButton;
     JButton removeTaskButton;
     JButton loadButton;
     JButton saveButton;
 
-    //testing
+    //List
     private ToDoList toDo = new ToDoList("My ToDoList");
     private JList list;
     private DefaultListModel<String> listModel = new DefaultListModel();
 
+    //Json functionality
     private static final String JSON_STORE = "./data/ToDoList.json";
     private JsonReader jsonReader = new JsonReader(JSON_STORE);
     private JsonWriter jsonWriter = new JsonWriter(JSON_STORE);
 
+    //EFFECTS: initializes GUI, including scrolling/list area, setting button functionality,
+    //         setting up the display
     public ToDoListAppGUI2() {
         super("My To-Do List");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -55,7 +65,7 @@ public class ToDoListAppGUI2 extends JFrame implements ActionListener, ListSelec
         add(buttonPane, BorderLayout.PAGE_END);
     }
 
-//    @org.jetbrains.annotations.NotNull
+    //EFFECTS: creates the scroll pane to display tasks
     private JScrollPane createList() {
         list = new JList(listModel);
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -66,6 +76,8 @@ public class ToDoListAppGUI2 extends JFrame implements ActionListener, ListSelec
         return listScrollPane;
     }
 
+    //MODIFIES: this
+    //EFFECTS: initializes button functionalities and text fields
     private void initializeFields() {
         addTaskButton = createTodoButton("Add Task: Description, Urgency(1-3)", "addTask");
         removeTaskButton = createTodoButton("Remove Task", "removeTask");
@@ -75,21 +87,23 @@ public class ToDoListAppGUI2 extends JFrame implements ActionListener, ListSelec
         field2 = new JTextField(1);
     }
 
-//    @org.jetbrains.annotations.NotNull
+    //EFFECTS: creates the button pane that will be displayed on GUI
+    //BorderFactory.createEmptyBorder and Box.createHorizontalStrut is
+    // inspired by ListDemo
     private JPanel getButtonPane() {
         JPanel buttonPane = new JPanel();
-        buttonPane.setLayout(new BoxLayout(buttonPane,BoxLayout.PAGE_AXIS));
+        buttonPane.setLayout(new BoxLayout(buttonPane, BoxLayout.PAGE_AXIS));
 
         JPanel subPane1 = getSubPaneA();
         JPanel subPane2 = getSubPaneB();
 
-        buttonPane.setBorder(BorderFactory.createEmptyBorder(10,5,10,5));
+        buttonPane.setBorder(BorderFactory.createEmptyBorder(10, 5, 10, 5));
         buttonPane.add(subPane1);
         buttonPane.add(subPane2);
         return buttonPane;
     }
 
-//    @org.jetbrains.annotations.NotNull
+    //EFFECTS: creates the second row of the button pane that will be displayed on GUI
     private JPanel getSubPaneB() {
         JPanel subPane2 = new JPanel();
         subPane2.setLayout(new BoxLayout(subPane2, BoxLayout.LINE_AXIS));
@@ -98,23 +112,24 @@ public class ToDoListAppGUI2 extends JFrame implements ActionListener, ListSelec
         subPane2.add(field2);
         subPane2.add(Box.createHorizontalStrut(10));
         subPane2.add(addTaskButton);
-        subPane2.setBorder(BorderFactory.createEmptyBorder(2,5,0,5));
+        subPane2.setBorder(BorderFactory.createEmptyBorder(2, 5, 0, 5));
         return subPane2;
     }
 
-//    @org.jetbrains.annotations.NotNull
+    //EFFECTS: creates the first row of the button pane that will be displayed on GUI
     private JPanel getSubPaneA() {
         JPanel subPane1 = new JPanel();
-        subPane1.setLayout(new BoxLayout(subPane1,BoxLayout.LINE_AXIS));
+        subPane1.setLayout(new BoxLayout(subPane1, BoxLayout.LINE_AXIS));
         subPane1.add(loadButton);
         subPane1.add(Box.createHorizontalStrut(5));
         subPane1.add(saveButton);
         subPane1.add(Box.createHorizontalStrut(5));
         subPane1.add(removeTaskButton);
-        subPane1.setBorder(BorderFactory.createEmptyBorder(0,5,2,5));
+        subPane1.setBorder(BorderFactory.createEmptyBorder(0, 5, 2, 5));
         return subPane1;
     }
 
+    //EFFECTS: creates a new button for the TodoList GUI, with a specified button name and command
     private JButton createTodoButton(String buttonName, String commandName) {
         JButton addTaskButton = new JButton(buttonName);
         addTaskButton.setActionCommand(commandName);
@@ -124,7 +139,9 @@ public class ToDoListAppGUI2 extends JFrame implements ActionListener, ListSelec
 
 
     @Override
-    //EFFECTS: if
+    //MODIFIES: this
+    //EFFECTS: For each button, (either add task, remove task, save todolist, or load todolist
+    //          performs the task specified by the button when clicked
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("addTask")) {
             addTask();
@@ -139,6 +156,10 @@ public class ToDoListAppGUI2 extends JFrame implements ActionListener, ListSelec
 
     }
 
+    //based on ListDemo
+    //MODIFIES: this, todolist
+    //EFFECTS: adds task to todolist and GUI based on input into both fields
+    //         places task at area of selection or, if none selected, at the beginning
     public void addTask() {
         String details = field1.getText();
         int urgency = Integer.parseInt(field2.getText());
@@ -156,7 +177,7 @@ public class ToDoListAppGUI2 extends JFrame implements ActionListener, ListSelec
         String text = getTaskInfo(newTask);
         listModel.insertElementAt(text, index);
         //If we just wanted to add to the end, we'd do this:
-//        listModel.addElement(employeeName.getText());
+//        listModel.addElement(text);
 
         //Reset the text fields.
         field1.requestFocusInWindow();
@@ -178,10 +199,10 @@ public class ToDoListAppGUI2 extends JFrame implements ActionListener, ListSelec
         } else {
             progress = "complete";
         }
-        String text = "Details: " + newTask.getDetails() + "    Urgency: " + newTask.getUrgency()
-                + "    Progress: " + progress;
+        String taskText = "Details: " + newTask.getDetails() + "    Urgency: "
+                + newTask.getUrgency() + "    Progress: " + progress + "    ID: " + newTask.getId();
 
-        return text;
+        return taskText;
     }
 
     @Override
@@ -201,16 +222,24 @@ public class ToDoListAppGUI2 extends JFrame implements ActionListener, ListSelec
         }
     }
 
+    //based on ListDemo
+    //MODIFIES: this, todolist
+    //EFFECTS: method only called if a valid selection is made
+    //         removes selected task from todolist and screen
+    //         if no tasks remaining, deactivates button
     public void removeTask() {
-        //This method can be called only if
-        //there's a valid selection
-        //so go ahead and remove whatever's selected.
+
         int index = list.getSelectedIndex();
+
+        String taskString = listModel.get(index);
+        int taskID = Integer.parseInt(String.valueOf(taskString.charAt(taskString.length() - 1)));
+
         listModel.remove(index);
+        toDo.removeTask(taskID);
 
         int size = listModel.getSize();
 
-        if (size == 0) { //Nobody's left, disable firing.
+        if (size == 0) { //Disable removing
             removeTaskButton.setEnabled(false);
 
         } else { //Select an index.
@@ -240,7 +269,7 @@ public class ToDoListAppGUI2 extends JFrame implements ActionListener, ListSelec
     private void uploadToDoList() {
         listModel.clear();
         //TODO: make this unmodifiable getTaskList
-        for (Task t: toDo.getTaskList()) {
+        for (Task t : toDo.getTaskList()) {
             String info = getTaskInfo(t);
             listModel.addElement(info);
         }
