@@ -1,31 +1,28 @@
 package ui;
 
-import model.ToDoList;
 import persistence.JsonReader;
 
 import java.io.IOException;
+import java.io.Serializable;
 
-public class LoadTool {
-    private static final String JSON_STORE = "./data/ToDoList.json";
+//Tool that saves the GUI todolist to a file
+public class LoadTool implements Serializable {
+    private final ToDoListAppGUI toDoListAppGUI;
+    final JsonReader jsonReader;
 
-    JsonReader jsonReader;
-    ToDoList toDo;
-
-    public LoadTool(ToDoList toDo) {
-        jsonReader = new JsonReader(JSON_STORE);
-        this.toDo = toDo;
+    public LoadTool(ToDoListAppGUI toDoListAppGUI) {
+        this.toDoListAppGUI = toDoListAppGUI;
+        this.jsonReader = new JsonReader(ToDoListAppGUI.JSON_STORE);
     }
 
-
-    // MODIFIES: this
-    // EFFECTS: loads todolist from file
-    private void loadToDoList() {
+    //MODIFIES: this
+    //EFFECTS: loads todolist from file
+    public void loadToDoList() {
         try {
-            toDo = jsonReader.read();
-            System.out.println("Loaded " + toDo.getName() + " from " + JSON_STORE);
+            toDoListAppGUI.setToDoList(jsonReader.read());
+            System.out.println("Loaded " + toDoListAppGUI.getToDoList().getName() + " from " + ToDoListAppGUI.JSON_STORE);
         } catch (IOException e) {
-            System.out.println("Unable to read from file: " + JSON_STORE);
+            System.out.println("Unable to read from file: " + ToDoListAppGUI.JSON_STORE);
         }
     }
-
 }

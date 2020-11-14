@@ -1,20 +1,4 @@
 {
     "name": "My ToDoList",
-    "taskList": [
-        {
-            "urgency": 2,
-            "progress": 0,
-            "details": "Penguin"
-        },
-        {
-            "urgency": 1,
-            "progress": 0,
-            "details": "Eat cheese"
-        },
-        {
-            "urgency": 3,
-            "progress": 0,
-            "details": "Do homework"
-        }
-    ]
+    "taskList": []
 }
