@@ -168,6 +168,7 @@ public class ToDoListAppGUI extends JFrame implements ActionListener, ListSelect
     //MODIFIES: this
     //EFFECTS: For each button, (either add task, remove task, save todolist, or load todolist
     //          performs the task specified by the button when clicked
+    //         plays a beep afterwards, for any button pressed
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("addTask")) {
             addTask();
