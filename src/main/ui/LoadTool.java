@@ -20,7 +20,8 @@ public class LoadTool implements Serializable {
     public void loadToDoList() {
         try {
             toDoListAppGUI.setToDoList(jsonReader.read());
-            System.out.println("Loaded " + toDoListAppGUI.getToDoList().getName() + " from " + ToDoListAppGUI.JSON_STORE);
+            System.out.println("Loaded " + toDoListAppGUI.getToDoList().getName() + " from "
+                    + ToDoListAppGUI.JSON_STORE);
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + ToDoListAppGUI.JSON_STORE);
         }
