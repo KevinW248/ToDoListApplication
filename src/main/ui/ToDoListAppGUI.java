@@ -39,6 +39,7 @@ public class ToDoListAppGUI extends JFrame implements ActionListener, ListSelect
     //Json functionality
     protected static final String JSON_STORE = "./data/ToDoList.json";
 
+    //based on ListDemo
     //EFFECTS: initializes GUI, including scrolling/list area, setting button functionality,
     //         setting up the display
     public ToDoListAppGUI() {
@@ -180,6 +181,7 @@ public class ToDoListAppGUI extends JFrame implements ActionListener, ListSelect
             loadToDoList();
             uploadToDoList();
         }
+        //found on https://docs.oracle.com/javase/8/docs/api/java/awt/Toolkit.html
         java.awt.Toolkit.getDefaultToolkit().beep();
     }
 
