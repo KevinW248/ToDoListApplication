@@ -1,5 +1,6 @@
 package model;
 
+import exception.InvalidInputException;
 import org.json.JSONObject;
 import persistence.Writable;
 
@@ -20,23 +21,36 @@ public class Task implements Writable {
     private int urgency;                            //task urgency
     private int progress;                           //task progress
 
-    //REQUIRES: details is longer than 0 characters, progress is incomplete or complete
     //EFFECTS: makes a new task, where:
     //         id is set to a unique positive integer for each new task,
     //         details are set to taskDetails,
     //         urgency is set to urgencyLevel if 1<=urgencyLevel<=3
-    //              otherwise, urgencyLevel is 3
-    //         progress is set to INCOMPLETE
-    public Task(String taskDetails, int urgencyLevel, int progress) {
+    //               otherwise, throws invalid input exception
+    //         progress is set to indicated progress level
+    //               if the progress level is invalid, throws invalid input exception
+    public Task(String taskDetails, int urgencyLevel, int progress) throws InvalidInputException {
         ////nextTaskId based on https://github.students.cs.ubc.ca/CPSC210/TellerApp
-        id = nextTaskId++;
         this.details = taskDetails;
         if (NOT_IMPORTANT <= urgencyLevel && urgencyLevel <= VERY_IMPORTANT) {
             this.urgency = urgencyLevel;
         } else {
-            this.urgency = VERY_IMPORTANT;
+            throw new InvalidInputException();
         }
-        this.progress = progress;
+
+        if (progress == INCOMPLETE || progress == COMPLETE) {
+            this.progress = progress;
+        } else {
+            throw new InvalidInputException();
+        }
+        id = nextTaskId++;
+    }
+
+    //constructs a default task with preset task details, urgency, and progress
+    public Task() {
+        id = nextTaskId++;
+        this.details = "Default task, please remove and try to make your task again";
+        this.urgency = VERY_IMPORTANT;
+        this.progress = INCOMPLETE;
     }
 
 
@@ -67,13 +81,13 @@ public class Task implements Writable {
     //MODIFIES: this
     //EFFECTS: if 1<= u <= 3,
     //            - updates Urgency to u and returns true
-    //         otherwise, urgency doesn't change and returns false
-    public Boolean setUrgency(int u) {
+    //         otherwise, throws InvalidInputException
+    public Boolean setUrgency(int u) throws InvalidInputException {
         if (u >= NOT_IMPORTANT && u <= VERY_IMPORTANT) {
             urgency = u;
             return true;
         }
-        return false;
+        throw new InvalidInputException();
     }
 
     //MODIFIES: this

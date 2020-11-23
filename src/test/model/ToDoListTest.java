@@ -1,5 +1,6 @@
 package model;
 
+import exception.InvalidInputException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -28,7 +29,7 @@ public class ToDoListTest {
 
     @Test
     public void testAddTask() {
-        Task t = new Task(details[0],urgency[0],Task.INCOMPLETE);
+        Task t = validTaskMaker(details[0],urgency[0],Task.INCOMPLETE);
         testToDo.addTask(t);
 
         assertEquals(1,testToDo.getIdListSize());
@@ -41,8 +42,8 @@ public class ToDoListTest {
 
     @Test
     public void testRemoveTask() {
-        Task t = new Task(details[0],urgency[0],Task.INCOMPLETE);
-        Task t1 = new Task(details[1],urgency[1],Task.INCOMPLETE);
+        Task t = validTaskMaker(details[0],urgency[0],Task.INCOMPLETE);
+        Task t1 = validTaskMaker(details[1],urgency[1],Task.INCOMPLETE);
         testToDo.addTask(t);
         testToDo.addTask(t1);
 
@@ -57,8 +58,8 @@ public class ToDoListTest {
 
     @Test
     public void testCompleteTask() {
-        Task t = new Task(details[0],urgency[0],Task.INCOMPLETE);
-        Task t1 = new Task(details[1],urgency[1],Task.INCOMPLETE);
+        Task t = validTaskMaker(details[0],urgency[0],Task.INCOMPLETE);
+        Task t1 = validTaskMaker(details[1],urgency[1],Task.INCOMPLETE);
         testToDo.addTask(t);
         testToDo.addTask(t1);
 
@@ -72,12 +73,12 @@ public class ToDoListTest {
     @Test
     public void testGetTotalCompleteAndIncomplete() {
         for (int i = 0; i < 6; i+=2) {
-            Task t = new Task(details[i],urgency[i],Task.INCOMPLETE);
+            Task t = validTaskMaker(details[i],urgency[i],Task.INCOMPLETE);
             testToDo.addTask(t);
             t.setComplete();
         }
         for (int i = 1; i < 6; i+=2) {
-            Task t = new Task(details[i],urgency[i],Task.INCOMPLETE);
+            Task t = validTaskMaker(details[i],urgency[i],Task.INCOMPLETE);
             testToDo.addTask(t);
         }
         assertEquals(3,testToDo.getTotalCompleted());
@@ -87,12 +88,22 @@ public class ToDoListTest {
 
     @Test
     public void testGetLists() {
-        Task t = new Task(details[0],urgency[0],Task.INCOMPLETE);
+        Task t = validTaskMaker(details[0],urgency[0],Task.INCOMPLETE);
         testToDo.addTask(t);
 
         ArrayList<Task> taskList = testToDo.getTaskList();
         assertEquals("Walk the dog",taskList.get(0).getDetails());
 
+    }
+
+    public Task validTaskMaker(String details, int urgency, int progress) {
+        Task t = null;
+        try {
+            t = new Task(details, urgency, progress);
+        } catch (InvalidInputException e) {
+            fail("Wasn't supposed to throw invalid input exception");
+        }
+        return t;
     }
 
 }

@@ -1,5 +1,6 @@
 package ui;
 
+import exception.InvalidInputException;
 import model.Task;
 
 import java.io.Serializable;
@@ -22,7 +23,12 @@ public class AddTaskTool implements Serializable {
         String details = toDoListAppGUI.getField1().getText();
         int urgency = Integer.parseInt(toDoListAppGUI.getField2().getText());
 
-        Task newTask = new Task(details, urgency, 0);
+        Task newTask = null;
+        try {
+            newTask = new Task(details, urgency, Task.INCOMPLETE);
+        } catch (InvalidInputException e) {
+            newTask = new Task();
+        }
         toDoListAppGUI.getToDoList().addTask(newTask);
 
         int index = toDoListAppGUI.getList().getSelectedIndex(); //get selected index

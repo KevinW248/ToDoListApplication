@@ -36,7 +36,7 @@ public class JsonReaderTest extends JsonTest{
     }
 
     @Test
-    void testReaderGeneralDoToList() {
+    void testReaderGeneralToDoList() {
         JsonReader reader = new JsonReader("./data/testReaderGeneralToDoList.json");
         try {
             ToDoList toDo = reader.read();
@@ -45,6 +45,23 @@ public class JsonReaderTest extends JsonTest{
             assertEquals(2, taskList.size());
             checkTask("Eat cupcakes", 1, Task.COMPLETE, taskList.get(0));
             checkTask("Study for 3 midterms", 3, Task.INCOMPLETE, taskList.get(1));
+        } catch (IOException e) {
+            fail("Couldn't read from file");
+        }
+    }
+
+    @Test
+    void testReaderInvalidDoToList() {
+        JsonReader reader = new JsonReader("./data/testReaderInvalidToDoList.json");
+        try {
+            ToDoList toDo = reader.read();
+            assertEquals("Test ToDo", toDo.getName());
+            List<Task> taskList = toDo.getTaskList();
+            assertEquals(2, taskList.size());
+            checkTask("Default task, please remove and try to make your task again",
+                    3, Task.INCOMPLETE, taskList.get(0));
+            checkTask("Default task, please remove and try to make your task again",
+                    3, Task.INCOMPLETE, taskList.get(1));
         } catch (IOException e) {
             fail("Couldn't read from file");
         }

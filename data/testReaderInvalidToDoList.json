@@ -1,0 +1,15 @@
+{
+    "taskList": [
+        {
+            "details": "Eat cupcakes",
+            "urgency": 4,
+            "progress": 1
+        },
+        {
+            "details": "Study for 3 midterms",
+            "urgency": 3,
+            "progress": -1
+        }
+    ],
+    "name": "Test ToDo"
+}

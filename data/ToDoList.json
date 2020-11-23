@@ -2,14 +2,19 @@
     "name": "My ToDoList",
     "taskList": [
         {
-            "urgency": 2,
+            "urgency": 3,
             "progress": 0,
-            "details": "penguin"
+            "details": "Default task, please remove and try to make your task again"
         },
         {
             "urgency": 1,
             "progress": 0,
-            "details": "penguin 123"
+            "details": "happy happy"
+        },
+        {
+            "urgency": 2,
+            "progress": 0,
+            "details": "complete part 2 of phase 4"
         }
     ]
 }

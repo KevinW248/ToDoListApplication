@@ -1,5 +1,6 @@
 package persistence;
 
+import exception.InvalidInputException;
 import model.Task;
 import model.ToDoList;
 import org.junit.jupiter.api.Test;
@@ -46,8 +47,12 @@ public class JsonWriterTest extends JsonTest{
     void testWriterGeneralToDoList() {
         try {
             ToDoList toDo = new ToDoList("Test ToDo");
-            toDo.addTask(new Task("Eat cupcakes", 1, Task.COMPLETE));
-            toDo.addTask(new Task("Study for 3 midterms", 3,Task.INCOMPLETE));
+            try {
+                toDo.addTask(new Task("Eat cupcakes", 1, Task.COMPLETE));
+                toDo.addTask(new Task("Study for 3 midterms", 3,Task.INCOMPLETE));
+            } catch (InvalidInputException e) {
+                fail("wasn't supposed to throw invalid input exception");
+            }
             JsonWriter writer = new JsonWriter("./data/testWriterGeneralToDoList.json");
             writer.open();
             writer.write(toDo);
@@ -65,5 +70,7 @@ public class JsonWriterTest extends JsonTest{
             fail("Exception should not have been thrown");
         }
     }
+
+
 
 }

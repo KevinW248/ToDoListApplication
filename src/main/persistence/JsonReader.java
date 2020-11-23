@@ -1,6 +1,7 @@
 package persistence;
 
 
+import exception.InvalidInputException;
 import model.Task;
 import model.ToDoList;
 import org.json.JSONArray;
@@ -64,11 +65,17 @@ public class JsonReader {
 
     // MODIFIES: ToDoList
     // EFFECTS: parses Task from JSON object and adds it to ToDoList
+    //              if comes across an invalid task, parses a default task instead
     private void addTask(ToDoList td, JSONObject jsonObject) {
         String details = jsonObject.getString("details");
         int urgency = jsonObject.getInt("urgency");
         int progress = jsonObject.getInt("progress");
-        Task task = new Task(details, urgency, progress);
+        Task task;
+        try {
+            task = new Task(details, urgency, progress);
+        } catch (InvalidInputException e) {
+            task = new Task();
+        }
         td.addTask(task);
     }
 }

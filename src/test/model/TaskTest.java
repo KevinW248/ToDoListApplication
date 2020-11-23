@@ -1,5 +1,6 @@
 package model;
 
+import exception.InvalidInputException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -12,57 +13,113 @@ class TaskTest {
 
     @BeforeEach
     public void setup() {
-        testTask = new Task("Finish CPSC-210 Personal project",3, Task.INCOMPLETE);
+        try {
+            testTask = new Task("Finish CPSC-210 Personal project",3, Task.INCOMPLETE);
+        } catch (InvalidInputException e) {
+            fail("threw invalid input exception when not supposed to");
+        }
+
     }
 
     @Test
-    public void testTaskConstructorNormalUrgency() {
+    public void testTaskConstructorNormalUrgencyandProgress() {
         assertEquals("Finish CPSC-210 Personal project",testTask.getDetails());
         assertEquals(3,testTask.getUrgency());
-        assertEquals(0,testTask.getProgress());
+        assertEquals(Task.INCOMPLETE,testTask.getProgress());
         assertTrue(testTask.getId()>0);
 
-        Task testTask2 = new Task("a",2, Task.INCOMPLETE);
-        Task testTask3 = new Task("b",1, Task.INCOMPLETE);
-        assertEquals(2,testTask2.getUrgency());
-        assertEquals(1,testTask3.getUrgency());
-        assertTrue(testTask2.getId()>0);
-        assertTrue(testTask3.getId()>0);
+        testTaskConstructorNormalInputsHelper(2,Task.INCOMPLETE);
+        testTaskConstructorNormalInputsHelper(1,Task.COMPLETE);
+    }
 
-        Task testTask4 = new Task("c",0, Task.COMPLETE);
-        assertEquals(3,testTask4.getUrgency());
-        assertTrue(testTask2.getId()>0);
-        assertEquals(Task.COMPLETE,testTask4.getProgress());
+    public void testTaskConstructorNormalInputsHelper(int urgency, int progress) {
+        Task testTask2 = null;
+        try {
+            testTask2 = new Task("Test new task", urgency, progress);
+        } catch (InvalidInputException e) {
+            fail("not supposed to throw invalid input exception");
+        }
+        assertEquals(urgency, testTask2.getUrgency());
+        assertEquals(progress, testTask2.getProgress());
+        assertTrue(testTask2.getId() > 0);
     }
 
     @Test
-    public void testTaskConstructorDifferentUrgencyLevel(){
-        Task testTask2 = new Task("Test new task",4, Task.INCOMPLETE);
-        assertEquals("Test new task",testTask2.getDetails());
-        assertEquals(3,testTask2.getUrgency());
-        assertEquals(0,testTask2.getProgress());
-        assertTrue(testTask2.getId()>0);
+    public void testTaskConstructorInvalidUrgency() {
+        testTaskConstructorInvalidUrgencyHelper(4);
+        testTaskConstructorInvalidUrgencyHelper(0);
     }
+
+    public void testTaskConstructorInvalidUrgencyHelper(int i){
+        Task testTask2 = null;
+        try {
+            testTask2 = new Task("Test new task", i, Task.INCOMPLETE);
+            fail("supposed to throw invalid input exception");
+        } catch (InvalidInputException e) {
+            //pass
+        }
+    }
+
+    @Test
+    public void testTaskConstructorInvalidProgress() {
+        testTaskConstructorInvalidProgressHelper(10);
+        testTaskConstructorInvalidProgressHelper(-1);
+    }
+
+    public void testTaskConstructorInvalidProgressHelper(int i){
+        Task testTask2 = null;
+        try {
+            testTask2 = new Task("Test new task", 2, i);
+            fail("supposed to throw invalid input exception");
+        } catch (InvalidInputException e) {
+            //pass
+        }
+    }
+
+    @Test
+    public void testDefaultTaskConstructor() {
+        Task t = new Task();
+        assertEquals("Default task, please remove and try to make your task again",
+                t.getDetails());
+        assertEquals(3, t.getUrgency());
+        assertEquals(Task.INCOMPLETE, t.getProgress());
+        assertTrue(t.getId() > 1);
+    }
+
+
 
     @Test
     public void testSetters() {
         testTask.setDetails("Feed the dog");
         assertEquals("Feed the dog",testTask.getDetails());
 
-        assertTrue(testTask.setUrgency(1));
-        assertEquals(1,testTask.getUrgency());
+        testSettersHelperAssertTrue(1);
 
-        assertTrue(testTask.setUrgency(3));
-        assertEquals(3,testTask.getUrgency());
+        testSettersHelperAssertTrue(3);
 
-        assertTrue(testTask.setUrgency(2));
-        assertEquals(2,testTask.getUrgency());
+        testSettersHelperAssertTrue(2);
 
-        assertFalse(testTask.setUrgency(4));
-        assertEquals(2,testTask.getUrgency());
+        testSettersHelperThrowException(4);
 
-        assertFalse(testTask.setUrgency(0));
-        assertEquals(2,testTask.getUrgency());
+        testSettersHelperThrowException(0);
+    }
+
+    private void testSettersHelperAssertTrue(int i ) {
+        try {
+            assertTrue(testTask.setUrgency(i));
+        } catch (InvalidInputException e) {
+            fail("threw invalid input exception when not supposed to");
+        }
+        assertEquals(i,testTask.getUrgency());
+    }
+
+    private void testSettersHelperThrowException(int i) {
+        try {
+            assertTrue(testTask.setUrgency(i));
+            fail("supposed to throw invalid input exception");
+        } catch (InvalidInputException e) {
+            //pass
+        }
     }
 
     @Test
