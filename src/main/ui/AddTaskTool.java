@@ -18,6 +18,7 @@ public class AddTaskTool implements Serializable {
     //based on ListDemo
     //MODIFIES: this, todolist
     //EFFECTS: adds task to todolist and GUI based on input into both fields
+    //               if InvalidInputException is caught, adds default Task instead
     //         places task at area of selection or, if none selected, at the beginning
     public void addTask() {
         String details = toDoListAppGUI.getField1().getText();
