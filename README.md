@@ -37,3 +37,11 @@ A new method, Task(), was designed, to create a default Task that did not throw 
     - Exception caught, and addTask() will now put a default task if an invalid one is read
 - Class 3, AddTaskTool
     - Exception caught, and addTask() will now add the default task if invalid fields were in the text box
+    
+## *Phase 4: Task 3*
+
+Personally, in terms of refactoring I felt like I did alright! I was having a tough time reading my GUI class,
+so I already refactored individual tasks away to separate classes to improve my cohesion. In addition, there isn't
+much coupling between classes so I feel like I did alright with that too. If I had more time, I think it would have
+been a good idea to see if I could have found overlapping functionality between the tools and made a Tool interface,
+like I've seen before earlier in the course in ShapePlayer.
