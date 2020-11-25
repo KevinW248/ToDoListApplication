@@ -40,8 +40,13 @@ A new method, Task(), was designed, to create a default Task that did not throw 
     
 ## *Phase 4: Task 3*
 
-Personally, in terms of refactoring I felt like I did alright! I was having a tough time reading my GUI class,
-so I already refactored individual tasks away to separate classes to improve my cohesion. In addition, there isn't
-much coupling between classes so I feel like I did alright with that too. If I had more time, I think it would have
-been a good idea to see if I could have found overlapping functionality between the tools and made a Tool interface,
-like I've seen before earlier in the course in ShapePlayer.
+If I had more time, I think it would have been a good idea to see if I could have made a new type hierarchy
+by making a Tool abstract class as a superclass and finding overlapping functionality between the tools
+    -  All of my Tools have a ToDoListAppGUI field and initialize it in the constructor
+I think that it would be better to have JButton be a common functionality in all the tools
+Instead of intializing all the buttons in ToDoListAppGUI
+    - In a Tool abstract class, I could have a JButton field and a JButton intialization method
+    - in the Tool subclasses, I could actually initialize the JButton field by using the initializing method
+    - what the button does when clicked could be specified in the tool subclass
+    - There could be a method in the tool subclass to add the button to the GUI
+    
