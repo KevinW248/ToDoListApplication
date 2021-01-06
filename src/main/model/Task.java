@@ -8,6 +8,7 @@ import persistence.Writable;
 public class Task implements Writable {
 
     //represents urgency levels
+    //
     public static final int NOT_IMPORTANT = 1;
     public static final int VERY_IMPORTANT = 3;
 
